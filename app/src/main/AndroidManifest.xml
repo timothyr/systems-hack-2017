@@ -20,8 +20,10 @@
         </activity>
         <activity android:name=".CreateAlarm" />
 
+        <service android:enabled="true" android:name="sfu.ca.systemshack2017.alarm.AlarmService"></service>
+
         <receiver
-            android:name=".AlarmBroadcastReceiver"
+            android:name=".alarm.AlarmBroadcastReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
     </application>

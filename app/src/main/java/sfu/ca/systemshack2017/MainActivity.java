@@ -11,11 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
+import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        callAlarmScheduleService();
 
         //setup event list
         ArrayAdapter<Event> eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
@@ -79,8 +83,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void settingsClick(MenuItem menuItem) {
+        //Toast.makeText(this, "SETTINGS", Toast.LENGTH_LONG).show();
+        callAlarmScheduleService();
+    }
+
     private void openCreateAlarmActivity() {
         Intent myIntent = new Intent(this, CreateAlarm.class);
         startActivity(myIntent);
+    }
+
+    protected void callAlarmScheduleService() {
+        Intent alarmServiceIntent = new Intent(this, AlarmBroadcastReceiver.class);
+        sendBroadcast(alarmServiceIntent, null);
     }
 }
