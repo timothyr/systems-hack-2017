@@ -9,15 +9,44 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sfu.ca.systemshack2017.CreateAlarm">
-
-    <TextView
-        android:text="Hi I'm an Alarm"
+    <Button
+        android:text="Create Buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="157dp"
-        android:id="@+id/alarm_textview"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/nameText"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="11dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="36sp" />
-
+        android:layout_alignParentStart="true"
+        android:inputType="textCapCharacters" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/timeText"
+        tools:text="Enter Time"
+        android:layout_below="@+id/dateText"
+        android:layout_alignStart="@+id/dateText"
+        android:focusableInTouchMode="false" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/dateText"
+        tools:text="Enter Date"
+        android:layout_below="@+id/nameText"
+        android:layout_alignStart="@+id/nameText"
+        android:focusableInTouchMode="false" />
 </RelativeLayout>
