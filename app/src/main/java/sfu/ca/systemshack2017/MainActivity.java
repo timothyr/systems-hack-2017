@@ -18,7 +18,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 
-
 import junit.framework.Assert;
 
 public class MainActivity extends AppCompatActivity
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "TODO add alarm", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
+                Log.d("Test", DistanceCalculator.test());
             }
         });
     }
