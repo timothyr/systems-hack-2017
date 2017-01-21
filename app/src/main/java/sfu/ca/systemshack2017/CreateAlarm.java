@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -22,6 +23,10 @@ public class CreateAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alarm);
 
+        EditText editTextFromDate = (EditText) findViewById(R.id.dateText);
+        SetDate fromDate = new SetDate(editTextFromDate, this);
+        EditText editTextFromTime = (EditText) findViewById(R.id.timeText);
+        SetTime fromTime = new SetTime(editTextFromTime, this);
 
         createTestAlarm(12,26);
 
