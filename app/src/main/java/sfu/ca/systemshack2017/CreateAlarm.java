@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
+
 public class CreateAlarm extends AppCompatActivity {
 
     PendingIntent pendingIntent;
@@ -21,7 +23,8 @@ public class CreateAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_create_alarm);
 
 
-        createTestAlarm(11,35);
+        createTestAlarm(12,26);
+
     }
 
     private void createTestAlarm(final int hour, final int minute) {
@@ -48,8 +51,7 @@ public class CreateAlarm extends AppCompatActivity {
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
-                AlarmManager.INTERVAL_HOUR, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
         Toast.makeText(this, "Alarm will vibrate at time specified",
                 Toast.LENGTH_SHORT).show();
