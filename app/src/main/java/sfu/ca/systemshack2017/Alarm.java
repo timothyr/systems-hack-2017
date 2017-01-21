@@ -49,7 +49,7 @@ public class Alarm {
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
 
         //TO:DO different requestcode for each alarm
-        int requestCode = 0;
+        int requestCode = 9;
         // Create new alarm intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -61,7 +61,7 @@ public class Alarm {
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, getAlarmTime(), pendingIntent);
 
-        String logMsg = "Alarm set for " + time.getTime();
+        String logMsg = "Alarm set for " + getAlarmCalendar().getTime();
         Log.d("Alarm class", logMsg);
         Toast.makeText(context, logMsg, Toast.LENGTH_SHORT).show();
     }

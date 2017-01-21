@@ -28,7 +28,7 @@ public class CreateAlarm extends AppCompatActivity {
         EditText editTextFromTime = (EditText) findViewById(R.id.timeText);
         SetTime fromTime = new SetTime(editTextFromTime, this);
 
-        createTestAlarm(12,26);
+        createTestAlarm(2,40);
 
     }
 
@@ -36,32 +36,18 @@ public class CreateAlarm extends AppCompatActivity {
 
     private void createTestAlarm(final int hour, final int minute) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
+        calendar.setTimeInMillis(System.currentTimeMillis() + 10000);
+        //calendar.set(Calendar.HOUR_OF_DAY, hour);
+        //calendar.set(Calendar.MINUTE, minute);
+        //calendar.set(Calendar.SECOND, 0);
 
         createNewAlarm(calendar.getTimeInMillis());
     }
 
     private void createNewAlarm(final long time) {
 
-        intent = new Intent(this, AlarmBroadcastReceiver.class);
-
-        //TO:DO different requestcode for each alarm
-        int requestCode = 0;
-        // Create new alarm intent
-        pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(),
-                requestCode,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-
-        Toast.makeText(this, "Alarm will vibrate at time specified",
-                Toast.LENGTH_SHORT).show();
+        Alarm alarm = new Alarm(time);
+        alarm.scheduleAlarm(getApplicationContext());
 
     }
 }
