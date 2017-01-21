@@ -23,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO alarm activity
-                Snackbar.make(view, "TODO add alarm", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                
+                openCreateAlarmActivity();
 
             }
         });
@@ -35,14 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        Intent myIntent = new Intent(this, CreateAlarm.class);
-        startActivity(myIntent);
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-
-
     }
 
     @Override
@@ -58,5 +51,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openCreateAlarmActivity() {
+        Intent myIntent = new Intent(this, CreateAlarm.class);
+        startActivity(myIntent);
     }
 }
