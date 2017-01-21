@@ -9,8 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ListView eventListView;
+    private List<Event> eventList = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //setup event list
+        ArrayAdapter<Event> eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
+        eventListView = (ListView) findViewById(R.id.eventListView);
+        eventListView.setAdapter(eventListAdapter);
+
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
     }
 
     @Override
