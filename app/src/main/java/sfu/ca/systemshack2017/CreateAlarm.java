@@ -20,29 +20,35 @@ public class CreateAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alarm);
 
-        startAlertAtParticularTime();
 
-
+        createTestAlarm(11,35);
     }
 
-
-
-    public void startAlertAtParticularTime() {
-
-        // alarm first vibrate at 14 hrs and 40 min and repeat itself at ONE_HOUR interval
-
-        intent = new Intent(this, AlarmBroadcastReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 280192, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
+    private void createTestAlarm(final int hour, final int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 40);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+
+        createNewAlarm(calendar.getTimeInMillis());
+    }
+
+    private void createNewAlarm(final long time) {
+
+        intent = new Intent(this, AlarmBroadcastReceiver.class);
+
+        //TO:DO different requestcode for each alarm
+        int requestCode = 0;
+        // Create new alarm intent
+        pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(),
+                requestCode,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
                 AlarmManager.INTERVAL_HOUR, pendingIntent);
 
         Toast.makeText(this, "Alarm will vibrate at time specified",
