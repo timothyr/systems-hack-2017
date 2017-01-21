@@ -38,7 +38,7 @@ public class SetTime implements TimePickerDialog.OnTimeSetListener, View.OnClick
      */
     @Override
     public void onClick( View view){
-        new TimePickerDialog(context, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+        new TimePickerDialog(context, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
     }
 
     @Override

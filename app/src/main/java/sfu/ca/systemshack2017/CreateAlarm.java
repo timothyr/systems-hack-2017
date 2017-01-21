@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +19,8 @@ public class CreateAlarm extends AppCompatActivity {
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
     Intent intent;
+    SetDate fromDate;
+    SetTime fromTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +28,19 @@ public class CreateAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_create_alarm);
 
         EditText editTextFromDate = (EditText) findViewById(R.id.dateText);
-        SetDate fromDate = new SetDate(editTextFromDate, this);
+        fromDate = new SetDate(editTextFromDate, this);
         EditText editTextFromTime = (EditText) findViewById(R.id.timeText);
-        SetTime fromTime = new SetTime(editTextFromTime, this);
+        fromTime = new SetTime(editTextFromTime, this);
+
+        Button createAlarm = (Button) findViewById(R.id.createButton);
+        createAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //createNewAlarm(setAlarmTime());
+                CharSequence text = "Created Alarm!";
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         createTestAlarm(2,40);
 
@@ -49,5 +63,23 @@ public class CreateAlarm extends AppCompatActivity {
         Alarm alarm = new Alarm(time);
         alarm.scheduleAlarm(getApplicationContext());
 
+    }
+
+    private Calendar setAlarmTime(){
+
+        Calendar alarmCalendar = Calendar.getInstance();
+
+        Calendar date = fromDate.getCalendar();
+        Calendar time = fromTime.getCalendar();
+
+        alarmCalendar.set(Calendar.YEAR, date.get(Calendar.YEAR));
+        alarmCalendar.set(Calendar.MONTH, date.get(Calendar.MONTH));
+        alarmCalendar.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        alarmCalendar.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        alarmCalendar.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+        alarmCalendar.set(Calendar.SECOND, 0);
+        alarmCalendar.set(Calendar.MILLISECOND, 0);
+
+        return alarmCalendar;
     }
 }
