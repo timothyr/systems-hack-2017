@@ -22,25 +22,32 @@ public class CreateAlarm extends AppCompatActivity {
 
 
 
-        startAlertAtParticularTime();
+        createNewAlarm();
 
 
     }
 
 
 
-    public void startAlertAtParticularTime() {
+    public void createNewAlarm() {
 
         // alarm first vibrate at 14 hrs and 40 min and repeat itself at ONE_HOUR interval
 
         intent = new Intent(this, AlarmBroadcastReceiver.class);
+
+        //TO:DO different requestcode for each alarm
+        int requestCode = 0;
+        // Create new alarm intent
         pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 280192, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                this.getApplicationContext(),
+                requestCode,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 40);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 20);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
