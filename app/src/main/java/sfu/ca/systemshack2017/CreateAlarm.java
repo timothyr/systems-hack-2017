@@ -36,13 +36,15 @@ public class CreateAlarm extends AppCompatActivity {
         createAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Alarm alarm = new Alarm(setAlarmTime());
+                alarm.scheduleAlarm(getApplicationContext());
                 //createNewAlarm(setAlarmTime());
                 CharSequence text = "Created Alarm!";
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
 
-        createTestAlarm(2,40);
+        //createTestAlarm(2,40);
 
     }
 

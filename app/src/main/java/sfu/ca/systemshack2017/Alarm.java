@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
@@ -17,7 +18,7 @@ import static android.content.Context.ALARM_SERVICE;
  * Created by timr on 2017-01-21.
  */
 
-public class Alarm {
+public class Alarm implements Serializable {
 
     private Boolean active = true;
     private Calendar time = Calendar.getInstance();
@@ -46,16 +47,17 @@ public class Alarm {
 
 
     public void scheduleAlarm(Context context) {
-        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
-
+        Intent alarmIntent = new Intent(context, AlarmBroadcastReceiver.class);
+        alarmIntent.putExtra("alarm", this);
         //TO:DO different requestcode for each alarm
         int requestCode = 9;
         // Create new alarm intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 requestCode,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+                //PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
