@@ -21,17 +21,19 @@ public class CreateAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_create_alarm);
 
 
-
-        createNewAlarm();
-
-
+        createTestAlarm(11,35);
     }
 
+    private void createTestAlarm(final int hour, final int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
 
+        createNewAlarm(calendar.getTimeInMillis());
+    }
 
-    public void createNewAlarm() {
-
-        // alarm first vibrate at 14 hrs and 40 min and repeat itself at ONE_HOUR interval
+    private void createNewAlarm(final long time) {
 
         intent = new Intent(this, AlarmBroadcastReceiver.class);
 
@@ -44,14 +46,9 @@ public class CreateAlarm extends AppCompatActivity {
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 20);
-
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
                 AlarmManager.INTERVAL_HOUR, pendingIntent);
 
         Toast.makeText(this, "Alarm will vibrate at time specified",
