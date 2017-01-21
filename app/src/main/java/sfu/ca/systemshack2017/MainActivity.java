@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //TODO alarm activity
+                Snackbar.make(view, "TODO add alarm", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
