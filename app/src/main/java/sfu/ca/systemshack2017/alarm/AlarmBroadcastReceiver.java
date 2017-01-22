@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
 
 import sfu.ca.systemshack2017.Alarm;
+import sfu.ca.systemshack2017.AlarmPlayer;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public AlarmBroadcastReceiver() {
@@ -35,6 +37,23 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         if(intent.hasExtra("id")) {
             Log.d("Alarm received", "id = " + intent.getLongExtra("id", -1));
+
+            Intent dismiss = new Intent(context.getApplicationContext(), AlarmBroadcastReceiver.class);
+            PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setContentTitle("My notification")
+                            .setContentText("Hello World!")
+                            .setSmallIcon(android.R.drawable.arrow_down_float)
+                            .setDeleteIntent(pendingDismissIntent);
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+            mNotificationManager.notify(55, mBuilder.build());
+
+            AlarmPlayer.playSound();
         }
 
         Intent serviceIntent = new Intent(context, AlarmService.class);

@@ -16,6 +16,7 @@ public class EventScheduler {
     public static void updateAllEvents() {
         for (Event event : MainActivity.eventList) {
             // check and update
+            event.refreshAlarmTime();
 
         }
     }

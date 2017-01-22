@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import sfu.ca.systemshack2017.Alarm;
+import sfu.ca.systemshack2017.AlarmPlayer;
 import sfu.ca.systemshack2017.R;
 
 /**
@@ -66,19 +68,14 @@ public class AlarmService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(this.getClass().getSimpleName(), "onStartCommand()");
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!")
-        .setSmallIcon(android.R.drawable.arrow_down_float);
 
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-        mNotificationManager.notify(55, mBuilder.build());
 
         return START_NOT_STICKY;
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AlarmPlayer.stopSound();
+    }
 }
