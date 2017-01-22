@@ -1,6 +1,9 @@
 package sfu.ca.systemshack2017.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,10 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.util.List;
+import java.util.Random;
 
 import sfu.ca.systemshack2017.Event;
 import sfu.ca.systemshack2017.R;
@@ -29,19 +35,52 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
 
         // Get the data item for this position
         Event event = getItem(position);
+        final ViewHolder cache;
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.alarm_list_item, parent, false);
-        }
-        // Lookup view for data population
-        TextView timeTxt = (TextView) convertView.findViewById(R.id.eventTimeTxt);
-        TextView nameTxt = (TextView) convertView.findViewById(R.id.eventNameTxt);
-        // Populate the data into the template view using the data object
-//        tvName.setText(event.name);
-//        tvHome.setText(event.hometown);
-        // Return the completed view to render on screen
 
-        ImageButton expandBtn = (ImageButton) convertView.findViewById(R.id.eventExpanderBtn);
+            cache = new ViewHolder();
+            cache.timeTxt = (TextView) convertView.findViewById(R.id.eventTimeTxt);
+            cache.eventNameTxt = (TextView) convertView.findViewById(R.id.eventNameTxt);
+            cache.expandableLayout = (ExpandableLayout) convertView.findViewById(R.id.eventExpander);
+            cache.expandBtn = (ImageButton) convertView.findViewById(R.id.eventExpanderBtn);
+            cache.expandBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (cache.expanded) {
+                        Log.d("Event list", "collapsing item");
+                        cache.expandableLayout.collapse();
+                        cache.expandBtn.setImageResource(android.R.drawable.arrow_down_float);
+                        cache.expanded = false;
+                    } else {
+                        Log.d("Event list", "expanding item");
+                        cache.expandableLayout.expand();
+                        cache.expandBtn.setImageResource(android.R.drawable.arrow_up_float);
+                        cache.expanded = true;
+                    }
+                }
+            });
+
+            convertView.setTag(cache);
+        } else {
+            cache = (ViewHolder) convertView.getTag();
+        }
+
+        final TextView timeTxt = cache.timeTxt;
+        final TextView eventNameTxt = cache.eventNameTxt;
+        final ExpandableLayout expandableLayout = cache.expandableLayout;
+        final ImageButton expandBtn = cache.expandBtn;
+
         return convertView;
+    }
+static Random r = new Random();
+    private class ViewHolder {
+        TextView timeTxt;
+        TextView eventNameTxt;
+        ImageButton expandBtn;
+        ExpandableLayout expandableLayout;
+        boolean expanded = false;
     }
 }

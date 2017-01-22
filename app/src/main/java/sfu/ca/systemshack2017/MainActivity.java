@@ -72,14 +72,8 @@ public class MainActivity extends AppCompatActivity
 
         eventList.add(new Event());
         eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
+        eventListAdapter.notifyDataSetChanged();
+
     }
 
     public void setupServices() {
