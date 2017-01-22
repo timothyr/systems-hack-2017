@@ -38,11 +38,12 @@ import junit.framework.Assert;
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener {
 
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
     private final static int LOCATION_PERMISSION_REQUEST_CODE = 11;
 
     private ListView eventListView;
-    private List<Event> eventList = new ArrayList<Event>();
+    public static List<Event> eventList = new ArrayList<Event>();
+    private ArrayAdapter<Event> eventListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +67,10 @@ public class MainActivity extends AppCompatActivity
         callAlarmScheduleService();
 
         //setup event list
-        ArrayAdapter<Event> eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
+        eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
         eventListView = (ListView) findViewById(R.id.eventListView);
         eventListView.setAdapter(eventListAdapter);
 
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
     }
 
     public void setupServices() {
@@ -178,7 +169,14 @@ public class MainActivity extends AppCompatActivity
 
     private void openCreateAlarmActivity() {
         Intent myIntent = new Intent(this, CreateAlarm.class);
-        startActivity(myIntent);
+        startActivityForResult(myIntent, 0);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        eventListAdapter.notifyDataSetChanged();
     }
 
     protected void callAlarmScheduleService() {

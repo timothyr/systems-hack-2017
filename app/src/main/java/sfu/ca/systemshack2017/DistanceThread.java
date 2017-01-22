@@ -15,12 +15,17 @@ import javax.net.ssl.HttpsURLConnection;
 public class DistanceThread extends Thread {
 
     public String result = "";
+    private String urlString = "";
+
+    public DistanceThread(String url) {
+        this.urlString = url;
+    }
 
     @Override
     public void run() {
 
         try {
-            URL url = new URL("https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood4&key=AIzaSyBQCbNu8HlhJHUe_Rjh3HlIiLKdc54bFlo");
+            URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             InputStreamReader inputReader = new InputStreamReader(connection.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputReader);
