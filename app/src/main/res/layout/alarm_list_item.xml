@@ -23,6 +23,13 @@
         android:id="@+id/eventNameTxt"
         android:textSize="@dimen/abc_text_size_large_material" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:text="Alert! Lots of traffic and weather and stuff"
+        android:id="@+id/eventAlertTxt" />
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

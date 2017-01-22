@@ -79,7 +79,7 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
         SimpleDateFormat sf = new SimpleDateFormat("h:mm a");
         timeTxt.setText(sf.format(event.getCalendar().getTime()));
         eventNameTxt.setText(event.getName());
-        eventLocationtxt.setText(event.getLocation().toString());
+        eventLocationtxt.setText(event.getLocationName());
 
         return convertView;
     }
