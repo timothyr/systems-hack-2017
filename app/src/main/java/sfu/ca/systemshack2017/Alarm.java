@@ -8,7 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
 
@@ -20,6 +22,7 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class Alarm implements Serializable {
 
+    private long id;
     private Boolean active = true;
     private Calendar time = Calendar.getInstance();
     private Boolean vibrate = true;
@@ -47,10 +50,17 @@ public class Alarm implements Serializable {
 
 
     public void scheduleAlarm(Context context) {
+        // id is equal to epoch time
+        id = getAlarmTime();
+
+        // Package intent
         Intent alarmIntent = new Intent(context, AlarmBroadcastReceiver.class);
         alarmIntent.putExtra("alarm", this);
+        alarmIntent.putExtra("id", id);
+
         //TO:DO different requestcode for each alarm
-        int requestCode = 9;
+        int requestCode = 0;
+
         // Create new alarm intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -62,8 +72,9 @@ public class Alarm implements Serializable {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, getAlarmTime(), pendingIntent);
-
-        String logMsg = "Alarm set for " + getAlarmCalendar().getTime();
+        String myFormat = "yyyy.MM.dd G 'at' K:mm:ss z"; //In which you need put here
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.CANADA);
+        String logMsg = "Alarm set for " + simpleDateFormat.format(getAlarmCalendar().getTime());
         Log.d("Alarm class", logMsg);
         Toast.makeText(context, logMsg, Toast.LENGTH_SHORT).show();
     }

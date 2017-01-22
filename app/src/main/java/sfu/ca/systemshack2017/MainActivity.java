@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     public static List<Event> eventList = new ArrayList<Event>();
     private ArrayAdapter<Event> eventListAdapter;
 
+    private Location location;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("Connection", "Connection Ready");
 
         Assert.assertTrue(mGoogleApiClient.isConnected());
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null) {
             Toast.makeText(this, location.toString(), Toast.LENGTH_LONG);
             Log.d("Location", location.toString());
@@ -175,7 +177,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openCreateAlarmActivity() {
+
         Intent myIntent = new Intent(this, CreateAlarm.class);
+
+        Bundle newBundle = new Bundle();
+        newBundle.putDouble("Longitude", location.getLongitude() );
+        newBundle.putDouble("Latitude", location.getLatitude() );
+
+        myIntent.putExtras(newBundle);
+
         startActivityForResult(myIntent, 0);
 
     }

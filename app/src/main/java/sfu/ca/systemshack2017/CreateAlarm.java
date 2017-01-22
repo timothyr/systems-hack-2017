@@ -3,6 +3,7 @@ package sfu.ca.systemshack2017;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,10 +56,30 @@ public class CreateAlarm extends AppCompatActivity {
             }
         });
 
-        //createTestAlarm(2,40);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addLocation);
+        fab.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View view) {
+
+                                       openMapsActivity();
+
+                                   }
+                               });
+
+
 
     }
 
+    private void openMapsActivity(){
+
+        Intent mapIntent = new Intent(this, MapsActivity.class);
+        Bundle newBundle = new Bundle();
+        newBundle.putDouble("Longitude", getIntent().getExtras().getDouble("Longitude"));
+        newBundle.putDouble("Latitude", getIntent().getExtras().getDouble("Latitude"));
+        mapIntent.putExtras(newBundle);
+        startActivity(mapIntent);
+    }
 
 
     private void createTestAlarm(final int hour, final int minute) {
