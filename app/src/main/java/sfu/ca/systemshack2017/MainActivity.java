@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        AlarmPlayer.setup(getBaseContext());
     }
 
     @Override
@@ -183,7 +184,6 @@ public class MainActivity extends AppCompatActivity
         newBundle.putDouble("Latitude", location.getLatitude() );
 
         myIntent.putExtras(newBundle);
-
         startActivityForResult(myIntent, 0);
 
     }
