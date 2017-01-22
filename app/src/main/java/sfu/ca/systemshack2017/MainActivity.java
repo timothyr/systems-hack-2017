@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity
     private final static int LOCATION_PERMISSION_REQUEST_CODE = 11;
 
     private ListView eventListView;
-    private List<Event> eventList = new ArrayList<Event>();
+    public static List<Event> eventList = new ArrayList<Event>();
+    private ArrayAdapter<Event> eventListAdapter;
+
     private Location location;
 
     @Override
@@ -64,20 +69,10 @@ public class MainActivity extends AppCompatActivity
         callAlarmScheduleService();
 
         //setup event list
-        ArrayAdapter<Event> eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
+        eventListAdapter = new EventListItemAdapter(this, R.layout.alarm_list_item, eventList);
         eventListView = (ListView) findViewById(R.id.eventListView);
         eventListView.setAdapter(eventListAdapter);
 
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
-        eventList.add(new Event());
     }
 
     public void setupServices() {
@@ -184,7 +179,14 @@ public class MainActivity extends AppCompatActivity
 
         myIntent.putExtras(newBundle);
 
-        startActivity(myIntent);
+        startActivityForResult(myIntent, 0);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        eventListAdapter.notifyDataSetChanged();
     }
 
     protected void callAlarmScheduleService() {
