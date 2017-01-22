@@ -43,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Placeholder" />
+            android:id="@+id/eventLocationTxt"
+            android:text="Location" />
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
 
@@ -62,6 +63,7 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
                     }
                 }
             });
+            cache.eventLocationTxt = (TextView) convertView.findViewById(R.id.eventLocationTxt);
 
             convertView.setTag(cache);
         } else {
@@ -72,13 +74,20 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
         final TextView eventNameTxt = cache.eventNameTxt;
         final ExpandableLayout expandableLayout = cache.expandableLayout;
         final ImageButton expandBtn = cache.expandBtn;
+        final TextView eventLocationtxt = cache.eventLocationTxt;
+
+        SimpleDateFormat sf = new SimpleDateFormat("h:mm a");
+        timeTxt.setText(sf.format(event.getCalendar().getTime()));
+        eventNameTxt.setText(event.getName());
+        eventLocationtxt.setText(event.getLocation().toString());
 
         return convertView;
     }
-static Random r = new Random();
+
     private class ViewHolder {
         TextView timeTxt;
         TextView eventNameTxt;
+        TextView eventLocationTxt;
         ImageButton expandBtn;
         ExpandableLayout expandableLayout;
         boolean expanded = false;

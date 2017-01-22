@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -47,7 +48,8 @@ public class CreateAlarm extends AppCompatActivity {
                 Location sfuBurnaby = new Location("");
                 sfuBurnaby.setLatitude(49.2780937);
                 sfuBurnaby.setLongitude(-122.922072);
-                Event event = new Event("", setAlarmTime(), sfuBurnaby);
+                String name = ((TextView) findViewById(R.id.nameText)).getText().toString();
+                Event event = new Event(name, setAlarmTime(), sfuBurnaby);
                 MainActivity.eventList.add(event);
 
             }
