@@ -20,36 +20,34 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/nameText"
         android:layout_marginStart="11dp"
         android:layout_marginTop="11dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:inputType="textCapCharacters" />
+        android:inputType="textCapCharacters"
+        android:hint="Name" />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/timeText"
-        tools:text="Enter Time"
         android:layout_below="@+id/dateText"
         android:layout_alignStart="@+id/dateText"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:hint="Enter Time" />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/dateText"
-        tools:text="Enter Date"
         android:layout_below="@+id/nameText"
         android:layout_alignStart="@+id/nameText"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:hint="Enter Date" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
