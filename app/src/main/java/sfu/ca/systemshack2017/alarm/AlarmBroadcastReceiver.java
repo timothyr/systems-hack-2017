@@ -18,6 +18,8 @@ import java.io.Serializable;
 import sfu.ca.systemshack2017.Alarm;
 import sfu.ca.systemshack2017.AlarmPlayer;
 
+import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
+
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public AlarmBroadcastReceiver() {
     }
@@ -38,20 +40,23 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         if(intent.hasExtra("id")) {
             Log.d("Alarm received", "id = " + intent.getLongExtra("id", -1));
 
-            Intent dismiss = new Intent(context.getApplicationContext(), AlarmBroadcastReceiver.class);
-            PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
+            Intent dismiss = new Intent(context, AlarmDismissBroadcastReceiver.class);
+            PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!")
+                            .setContentTitle("Alarm notification")
+                            .setContentText("dismiss")
                             .setSmallIcon(android.R.drawable.arrow_down_float)
-                            .setDeleteIntent(pendingDismissIntent);
+                            .setDeleteIntent(pendingDismissIntent)
+                            .setContentIntent(pendingDismissIntent);
+////                    .setAutoCancel(true)
+//                    .setOngoing(false);
 
             NotificationManager mNotificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 // mId allows you to update the notification later on.
-            mNotificationManager.notify(55, mBuilder.build());
+            mNotificationManager.notify(123, mBuilder.build());
 
             AlarmPlayer.playSound();
         }
