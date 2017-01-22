@@ -8,7 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
 
@@ -62,8 +64,9 @@ public class Alarm implements Serializable {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, getAlarmTime(), pendingIntent);
-
-        String logMsg = "Alarm set for " + getAlarmCalendar().getTime();
+        String myFormat = "yyyy.MM.dd G 'at' K:mm:ss z"; //In which you need put here
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.CANADA);
+        String logMsg = "Alarm set for " + simpleDateFormat.format(getAlarmCalendar().getTime());
         Log.d("Alarm class", logMsg);
         Toast.makeText(context, logMsg, Toast.LENGTH_SHORT).show();
     }

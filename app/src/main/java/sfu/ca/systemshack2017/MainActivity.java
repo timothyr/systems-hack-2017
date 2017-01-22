@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,7 +24,6 @@ import java.util.List;
 
 import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,11 +35,12 @@ import junit.framework.Assert;
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener {
 
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
     private final static int LOCATION_PERMISSION_REQUEST_CODE = 11;
 
     private ListView eventListView;
     private List<Event> eventList = new ArrayList<Event>();
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("Connection", "Connection Ready");
 
         Assert.assertTrue(mGoogleApiClient.isConnected());
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null) {
             Toast.makeText(this, location.toString(), Toast.LENGTH_LONG);
             Log.d("Location", location.toString());
@@ -177,7 +175,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openCreateAlarmActivity() {
+
         Intent myIntent = new Intent(this, CreateAlarm.class);
+
+        Bundle newBundle = new Bundle();
+        newBundle.putDouble("Longitude", location.getLongitude() );
+        newBundle.putDouble("Latitude", location.getLatitude() );
+
+        myIntent.putExtras(newBundle);
+
         startActivity(myIntent);
     }
 
