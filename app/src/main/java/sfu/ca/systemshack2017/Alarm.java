@@ -22,6 +22,7 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class Alarm implements Serializable {
 
+    private long id;
     private Boolean active = true;
     private Calendar time = Calendar.getInstance();
     private Boolean vibrate = true;
@@ -49,10 +50,17 @@ public class Alarm implements Serializable {
 
 
     public void scheduleAlarm(Context context) {
+        // id is equal to epoch time
+        id = getAlarmTime();
+
+        // Package intent
         Intent alarmIntent = new Intent(context, AlarmBroadcastReceiver.class);
         alarmIntent.putExtra("alarm", this);
+        alarmIntent.putExtra("id", id);
+
         //TO:DO different requestcode for each alarm
-        int requestCode = 9;
+        int requestCode = 0;
+
         // Create new alarm intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

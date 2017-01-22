@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -45,8 +46,6 @@ public class CreateAlarm extends AppCompatActivity {
                 CharSequence text = "Created Alarm!";
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-//                Event event = new Event("", setAlarmTime(), sfuBurnaby);
-//                MainActivity.eventList.add(event);
 
             }
         });
