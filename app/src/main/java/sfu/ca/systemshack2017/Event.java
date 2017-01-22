@@ -1,14 +1,12 @@
 package sfu.ca.systemshack2017;
 
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
-import static sfu.ca.systemshack2017.MainActivity.geocoder;
 
 /**
  * Created by brandon on 1/21/2017.
@@ -18,12 +16,13 @@ public class Event {
     private Alarm alarm;
     private String name;
     private Calendar calendar;
-    private Location location;
+    private LatLng latLng;
 
-    public Event(String name, Calendar calendar, Location location) {
+
+    public Event(String name, Calendar calendar, LatLng latLng) {
         this.name = name;
         this.calendar = calendar;
-        this.location = location;
+        this.latLng = latLng;
         createAlarm();
         refreshAlarmTime();
     }
@@ -53,12 +52,12 @@ public class Event {
         this.calendar = calendar;
     }
 
-    public Location getLocation() {
-        return location;
+    public LatLng getLatLng() {
+        return latLng;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 
     public Alarm getAlarm() {
@@ -67,7 +66,7 @@ public class Event {
 
     public String getLocationName() {
         try {
-            List<Address> addresses = MainActivity.geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            List<Address> addresses = MainActivity.geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             return addresses.get(0).getAddressLine(0);
         } catch (Exception ex) {
 

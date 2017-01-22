@@ -1,24 +1,15 @@
 package sfu.ca.systemshack2017;
 
-import android.content.res.Resources;
 import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.location.LocationServices;
-import com.google.maps.internal.ExceptionResult;
+import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Joe on 1/21/2017.
@@ -32,7 +23,7 @@ public class DistanceCalculator {
 
         Location location = LocationServices.FusedLocationApi.getLastLocation(MainActivity.mGoogleApiClient);
 
-        String url = getGoogleMapUrl(location, event.getLocation(), TravelOption.TRANSIT, event.getCalendar());
+        String url = getGoogleMapUrl(location, event.getLatLng(), TravelOption.TRANSIT, event.getCalendar());
         DistanceThread thread = new DistanceThread(url);
         thread.start();
         try {
@@ -66,11 +57,11 @@ public class DistanceCalculator {
         }
     }
 
-    public static String getGoogleMapUrl(Location origin, Location destination, TravelOption travelOption, Calendar calendar) {
+    public static String getGoogleMapUrl(Location origin, LatLng destination, TravelOption travelOption, Calendar calendar) {
         String url = "https://maps.googleapis.com/maps/api/directions/json?";
 
         url += "origin=" + origin.getLatitude() + "," + origin.getLongitude() + "&";
-        url += "destination=" + destination.getLatitude() + "," + destination.getLongitude() + "&";
+        url += "destination=" + destination.latitude + "," + destination.longitude + "&";
         url += "key=" + apiKey + "&";
 
         url += "mode=";

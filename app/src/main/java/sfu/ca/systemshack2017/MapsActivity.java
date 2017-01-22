@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -55,7 +56,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            Calendar sendCalendar = Calendar.getInstance();
+            sendCalendar.setTimeInMillis(getIntent().getExtras().getLong("Time"));
+            postAlarm(
+                    getIntent().getExtras().getString("Name"),
+                    sendCalendar,
+                    latLng
+            );
         }
+    }
+
+    private void postAlarm(String string, Calendar calendar, LatLng latLng){
+        Event event = new Event(string,calendar,latLng);
+        MainActivity.eventList.add(event);
     }
 
     /**

@@ -45,11 +45,8 @@ public class CreateAlarm extends AppCompatActivity {
                 CharSequence text = "Created Alarm!";
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-                Location sfuBurnaby = new Location("");
-                sfuBurnaby.setLatitude(49.2780937);
-                sfuBurnaby.setLongitude(-122.922072);
-                Event event = new Event("", setAlarmTime(), sfuBurnaby);
-                MainActivity.eventList.add(event);
+//                Event event = new Event("", setAlarmTime(), sfuBurnaby);
+//                MainActivity.eventList.add(event);
 
             }
         });
@@ -71,10 +68,14 @@ public class CreateAlarm extends AppCompatActivity {
 
     private void openMapsActivity(){
 
+        EditText message = (EditText) findViewById(R.id.nameText);
+
         Intent mapIntent = new Intent(this, MapsActivity.class);
         Bundle newBundle = new Bundle();
         newBundle.putDouble("Longitude", getIntent().getExtras().getDouble("Longitude"));
         newBundle.putDouble("Latitude", getIntent().getExtras().getDouble("Latitude"));
+        newBundle.putLong("Time", setAlarmTime().getTimeInMillis());
+        newBundle.putString("Name", message.getText().toString());
         mapIntent.putExtras(newBundle);
         startActivity(mapIntent);
     }
