@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity
         eventListView = (ListView) findViewById(R.id.eventListView);
         eventListView.setAdapter(eventListAdapter);
 
+        eventListAdapter.notifyDataSetChanged();
+
     }
 
     public void setupServices() {
