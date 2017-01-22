@@ -3,6 +3,7 @@ package sfu.ca.systemshack2017;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener {
 
     public static GoogleApiClient mGoogleApiClient;
+    public static Geocoder geocoder;
     private final static int LOCATION_PERMISSION_REQUEST_CODE = 11;
 
     private ListView eventListView;
@@ -79,6 +82,8 @@ public class MainActivity extends AppCompatActivity
                 .addApi(LocationServices.API)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        geocoder = new Geocoder(this, Locale.CANADA);
     }
 
     @Override
