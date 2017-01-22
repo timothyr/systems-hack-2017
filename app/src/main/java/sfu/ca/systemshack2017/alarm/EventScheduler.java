@@ -13,7 +13,7 @@ public class EventScheduler {
 
     }
 
-    public void updateAllEvents() {
+    public static void updateAllEvents() {
         for (Event event : MainActivity.eventList) {
             // check and update
 

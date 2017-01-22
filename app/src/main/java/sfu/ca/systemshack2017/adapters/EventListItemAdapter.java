@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +47,7 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
             cache = new ViewHolder();
             cache.timeTxt = (TextView) convertView.findViewById(R.id.eventTimeTxt);
             cache.eventNameTxt = (TextView) convertView.findViewById(R.id.eventNameTxt);
+            cache.eventAlarmTimeTxt = (TextView) convertView.findViewById(R.id.alarmTimeTxt);
             cache.expandableLayout = (ExpandableLayout) convertView.findViewById(R.id.eventExpander);
             cache.expandBtn = (ImageButton) convertView.findViewById(R.id.eventExpanderBtn);
             cache.expandBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +75,16 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
 
         final TextView timeTxt = cache.timeTxt;
         final TextView eventNameTxt = cache.eventNameTxt;
+        final TextView alarmTimeTxt = cache.eventAlarmTimeTxt;
         final ExpandableLayout expandableLayout = cache.expandableLayout;
         final ImageButton expandBtn = cache.expandBtn;
         final TextView eventLocationtxt = cache.eventLocationTxt;
 
         SimpleDateFormat sf = new SimpleDateFormat("h:mm a");
         timeTxt.setText(sf.format(event.getCalendar().getTime()));
+        alarmTimeTxt.setText(sf.format(event.getAlarm().getAlarmCalendar().getTime()));
         eventNameTxt.setText(event.getName());
-        eventLocationtxt.setText(event.getLocationName());
+        eventLocationtxt.setText("Location: " + event.getLocationName());
 
         return convertView;
     }
@@ -88,6 +93,7 @@ public class EventListItemAdapter extends ArrayAdapter<Event> {
         TextView timeTxt;
         TextView eventNameTxt;
         TextView eventLocationTxt;
+        TextView eventAlarmTimeTxt;
         ImageButton expandBtn;
         ExpandableLayout expandableLayout;
         boolean expanded = false;
