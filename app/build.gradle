@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.maps:google-maps-services:0.1.17'
     compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile 'net.cachapa.expandablelayout:expandablelayout:2.6'
 }
