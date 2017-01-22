@@ -3,6 +3,7 @@ package sfu.ca.systemshack2017;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import sfu.ca.systemshack2017.adapters.EventListItemAdapter;
 import sfu.ca.systemshack2017.alarm.AlarmBroadcastReceiver;
@@ -39,11 +41,14 @@ public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener {
 
     public static GoogleApiClient mGoogleApiClient;
+    public static Geocoder geocoder;
     private final static int LOCATION_PERMISSION_REQUEST_CODE = 11;
 
     private ListView eventListView;
     public static List<Event> eventList = new ArrayList<Event>();
     private ArrayAdapter<Event> eventListAdapter;
+
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,8 @@ public class MainActivity extends AppCompatActivity
                 .addApi(LocationServices.API)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        geocoder = new Geocoder(this, Locale.CANADA);
     }
 
     @Override
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("Connection", "Connection Ready");
 
         Assert.assertTrue(mGoogleApiClient.isConnected());
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null) {
             Toast.makeText(this, location.toString(), Toast.LENGTH_LONG);
             Log.d("Location", location.toString());
@@ -168,7 +175,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openCreateAlarmActivity() {
+
         Intent myIntent = new Intent(this, CreateAlarm.class);
+
+        Bundle newBundle = new Bundle();
+        newBundle.putDouble("Longitude", location.getLongitude() );
+        newBundle.putDouble("Latitude", location.getLatitude() );
+
+        myIntent.putExtras(newBundle);
+
         startActivityForResult(myIntent, 0);
 
     }
